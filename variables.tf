@@ -74,10 +74,6 @@ variable "runner_url" {
   description = "The runner url to benchmark tests against e.g. myenv-runner.gcp.dev.eq.ons.digital"
 }
 
-variable "locust_fully_qualified_domain_name" {
-  description = "Fully Qualified Domain Name for locust e.g. myenv-locust.gcp.dev.eq.ons.digital"
-}
-
 variable "create_dns" {
   description = "If set to true DNS records will be created in the specified dns project"
   default     = false
