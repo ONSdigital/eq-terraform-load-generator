@@ -1,4 +1,4 @@
-# Load Generator
+# EQ Load Generator
 
 This folder contains the config for the EQ load generator infrastructure. It uses the eq-survey-runner-benchmark repo in order to configure a load test using http://locust.io.
 
