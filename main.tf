@@ -132,7 +132,7 @@ resource "google_container_node_pool" "main-node-pool" {
 
   autoscaling {
     min_node_count = 1
-    max_node_count = 20
+    max_node_count = 1
   }
 
   management {
