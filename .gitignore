@@ -1,0 +1,10 @@
+.idea
+.terraform
+terraform.tfstate.d
+terraform.tfstate.backup
+terraform.tfstate.*.backup
+terraform.tfvars
+
+scripts/certificates/*
+
+*.DS_Store
