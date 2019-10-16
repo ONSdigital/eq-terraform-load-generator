@@ -15,7 +15,7 @@ git clone --branch eq-3425-tf-benchmark --depth 1 https://github.com/ONSdigital/
 
 cd ${temp_dir}/eq-survey-runner-benchmark
 
-REQUESTS_JSON="$2" HOST="$1" ./k8s/deploy_app.sh
+./k8s/deploy_app.sh
 
 # Delete repo
 rm -rf "${temp_dir}"
