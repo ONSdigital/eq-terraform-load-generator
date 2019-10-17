@@ -14,7 +14,6 @@ fi
 
 # Deploy infrastructure
 scripts/deploy_infrastructure.sh ${ENV}
-
 scripts/deploy_benchmark.sh ${RUNNER_URL}
 
 echo
