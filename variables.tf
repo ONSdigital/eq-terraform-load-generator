@@ -28,7 +28,3 @@ variable "k8s_min_master_version" {
   description = "The minimum version of the master"
   default     = "1.13"
 }
-
-variable "runner_url" {
-  description = "The runner url to benchmark tests against e.g. myenv-runner.gcp.dev.eq.ons.digital"
-}
