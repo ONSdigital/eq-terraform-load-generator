@@ -145,6 +145,8 @@ resource "google_container_node_pool" "main-node-pool" {
 
     oauth_scopes = [
       "compute-rw",
+      "logging-write",
+      "monitoring"
     ]
 
     service_account = "${google_service_account.compute.email}"
