@@ -36,16 +36,6 @@ resource "google_project" "project" {
   }
 }
 
-output "google_project_id" {
-  value = "${google_project.project.project_id}"
-}
-
-// This enables app engine, but more importantly also enables Datastore
-resource "google_app_engine_application" "app" {
-  project     = "${google_project.project.project_id}"
-  location_id = "${var.region}"
-}
-
 resource "google_project_service" "compute" {
   project = "${google_project.project.project_id}"
   service = "compute.googleapis.com"
