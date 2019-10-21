@@ -26,6 +26,3 @@ REGION=$(terraform output region)
 
 # Login to cluster
 gcloud container clusters get-credentials runner-benchmark --region ${REGION} --project ${PROJECT_ID}
-
-kubectl create configmap benchmark-config \
-  --dry-run -o yaml | kubectl apply -f -
