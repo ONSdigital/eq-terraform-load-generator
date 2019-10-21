@@ -1,4 +1,3 @@
-env                 = ""
 gcp_billing_account = ""
 
 gcp_folder_id = ""
