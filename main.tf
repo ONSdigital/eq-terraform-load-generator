@@ -13,8 +13,6 @@ provider "google" {
   region = "${var.region}"
 }
 
-provider "google-beta" {}
-
 output "region" {
   value = "${var.region}"
 }
