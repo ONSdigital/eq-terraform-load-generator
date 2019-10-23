@@ -36,7 +36,7 @@ Destroy with `ENV=your-env ./destroy.sh`
 
 If you are deploying to an existing environment, you can use the `EXISTING_PROJECT_ID` variable to define this:
 ```
-EXISTING_PROJECT_ID=existing-project ENV=existing-project ./create.sh
+EXISTING_PROJECT_ID=existing-project ENV=existing-project RUNNER_URL=https://your-runner.gcp.dev.eq.ons.digital ./create.sh
 ```
 
 If you want to vary the default parameters Locust uses on start, you can specify them using the LOCUST_OPTS environment variable:
