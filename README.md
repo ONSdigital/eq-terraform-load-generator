@@ -30,7 +30,7 @@ Use an ENV name which follows the naming conventions here: https://cloud.google.
 
 Rename `terraform.tfvars.example` to `terraform.tfvars` and fill in the values. (Ask a team member for help).
 
-Create with `ENV=your-env RUNNER_URL=http://your-runner.gcp.dev.eq.ons.digital ./create.sh`
+Create with `ENV=your-env RUNNER_URL=https://your-runner.gcp.dev.eq.ons.digital ./create.sh`
 
 Destroy with `ENV=your-env ./destroy.sh`
 
