@@ -19,7 +19,7 @@ if [ ! -z $EXISTING_PROJECT_ID ]; then
 fi
 
 # Roll out infrastructure
-terraform apply -auto-approve -var 'env=${ENV}'
+terraform apply -auto-approve -var "env=${ENV}"
 
 PROJECT_ID=$(terraform output google_project_id)
 REGION=$(terraform output region)

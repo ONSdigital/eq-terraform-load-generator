@@ -36,6 +36,10 @@ resource "google_project" "project" {
   }
 }
 
+output "google_project_id" {
+  value = "${google_project.project.project_id}"
+}
+
 resource "google_project_service" "compute" {
   project = "${google_project.project.project_id}"
   service = "compute.googleapis.com"
