@@ -8,7 +8,7 @@ IMPORT_EXISTING_PROJECT="${IMPORT_EXISTING_PROJECT:-false}"
 
 terraform init --upgrade --backend-config prefix=${PROJECT_NAME} --backend-config bucket=${TERRAFORM_STATE_BUCKET}
 
-if [ ! -z $IMPORT_EXISTING_PROJECT ]; then
+if [ "$IMPORT_EXISTING_PROJECT" = true ]; then
     echo "Using existing project_id: $PROJECT_NAME"
 
     if terraform state list | grep -q "google_project.project"; then
