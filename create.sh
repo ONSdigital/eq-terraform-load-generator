@@ -2,8 +2,8 @@
 
 set -e
 
-if [[ -z "$ENV" ]]; then
-  echo "Missing ENV variable"
+if [[ -z "$PROJECT_NAME" ]]; then
+  echo "Missing PROJECT_NAME variable"
   exit 1
 fi
 
@@ -13,7 +13,7 @@ if [[ -z "$RUNNER_URL" ]]; then
 fi
 
 # Deploy infrastructure
-scripts/deploy_infrastructure.sh ${ENV}
+scripts/deploy_infrastructure.sh ${PROJECT_NAME}
 scripts/deploy_benchmark.sh ${RUNNER_URL}
 
 echo

@@ -6,7 +6,7 @@ terraform {
 
 resource "random_id" "id" {
   byte_length = 4
-  prefix      = "benchmark-${var.env}-"
+  prefix      = "benchmark-${var.project_name}-"
 }
 
 provider "google" {
@@ -18,7 +18,7 @@ output "region" {
 }
 
 resource "google_project" "project" {
-  name            = "${var.env}"
+  name            = "${var.project_name}"
   project_id      = "${random_id.id.hex}"
   folder_id       = "${var.gcp_folder_id}"
   billing_account = "${var.gcp_billing_account}"
