@@ -26,7 +26,7 @@ This folder contains the config for the EQ load generator infrastructure. It use
 
 ### Development
 
-Use an PROJECT_NAME name which follows the naming conventions here: https://cloud.google.com/storage/docs/naming
+Use a PROJECT_NAME name which follows the naming conventions here: https://cloud.google.com/storage/docs/naming
 
 Rename `terraform.tfvars.example` to `terraform.tfvars` and fill in the values. (Ask a team member for help).
 
