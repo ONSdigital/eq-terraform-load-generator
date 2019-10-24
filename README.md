@@ -45,5 +45,5 @@ LOCUST_OPTS="-f locustfile.py -c 1000 -r 50 -L WARNING" RUNNER_URL=http://your-r
 ```
 Will create an environment running locust with a web interface with 1000 clients and a hatch rate of 50, with a log level of warnings and above.
 
-Terraform state will by default be stored in the `census-eq-terraform-tfstate` bucket, this bucket can be overridden by setting the `TERRAFORM_STATE_BUCKET` environment variable
+Terraform state will by default be stored in the `eq-terraform-load-generator-tfstate` bucket, this bucket can be overridden by setting the `TERRAFORM_STATE_BUCKET` environment variable
 
