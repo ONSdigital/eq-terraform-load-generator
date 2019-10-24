@@ -6,7 +6,7 @@ RUNNER_URL=$1
 TEMP_DIR=$(mktemp -d)
 
 # Clone Launcher Repo
-git clone --branch eq-3425-terraform-benchmark --depth 1 https://github.com/ONSdigital/eq-survey-runner-benchmark.git "${TEMP_DIR}"/eq-survey-runner-benchmark
+git clone --branch master --depth 1 https://github.com/ONSdigital/eq-survey-runner-benchmark.git "${TEMP_DIR}"/eq-survey-runner-benchmark
 
 cd ${TEMP_DIR}/eq-survey-runner-benchmark
 
