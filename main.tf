@@ -102,12 +102,6 @@ resource "google_container_cluster" "runner-benchmark" {
       issue_client_certificate = false
     }
   }
-
-  addons_config {
-    kubernetes_dashboard {
-      disabled = true
-    }
-  }
 }
 
 resource "google_container_node_pool" "main-node-pool" {
