@@ -11,4 +11,4 @@ terraform init --upgrade --backend-config prefix=${PROJECT_NAME} -var "project_n
 terraform state rm google_compute_network.k8s
 
 # Destroy infrastructure
-terraform destroy -auto-approve
+terraform destroy -auto-approve -var "project_name=${PROJECT_NAME}"
