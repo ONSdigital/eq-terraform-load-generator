@@ -41,7 +41,7 @@ IMPORT_EXISTING_PROJECT=true PROJECT_NAME=existing-project-id RUNNER_URL=https:/
 
 If you want to vary the default parameters Locust uses on start, you can specify them using the LOCUST_OPTS environment variable:
 ```
-LOCUST_OPTS="-f locustfile.py -c 1000 -r 50 -L WARNING" RUNNER_URL=http://your-runner.gcp.dev.eq.ons.digital ENV=your-env ./create.sh
+LOCUST_OPTS="-f locustfile.py -c 1000 -r 50 -L WARNING" RUNNER_URL=http://your-runner.gcp.dev.eq.ons.digital PROJECT_NAME=your-project-name ./create.sh
 ```
 Will create an environment running locust with a web interface with 1000 clients and a hatch rate of 50, with a log level of warnings and above.
 
