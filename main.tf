@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "census-eq-terraform-tfstate"
+    bucket = "eq-terraform-load-generator-tfstate"
   }
 }
 
@@ -24,7 +24,7 @@ resource "google_project" "project" {
   billing_account = "${var.gcp_billing_account}"
 
   labels {
-    terraform = "census-eq-terraform"
+    terraform = "eq-terraform-load-generator"
     team      = "${var.project_team}"
     env       = "${var.project_env}"
   }
