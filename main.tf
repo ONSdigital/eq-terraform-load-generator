@@ -46,13 +46,6 @@ resource "google_project_service" "compute" {
   disable_on_destroy         = false
 }
 
-resource "google_project_service" "container" {
-  project = "${google_project.project.project_id}"
-  service = "container.googleapis.com"
-
-  disable_dependent_services = true
-}
-
 resource "google_project_service" "logging" {
   project = "${google_project.project.project_id}"
   service = "logging.googleapis.com"
