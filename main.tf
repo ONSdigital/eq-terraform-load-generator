@@ -38,6 +38,13 @@ output "google_project_id" {
   value = "${google_project.project.project_id}"
 }
 
+resource "google_project_service" "container" {
+  project = "${google_project.project.project_id}"
+  service = "container.googleapis.com"
+
+  disable_dependent_services = true
+}
+
 resource "google_project_service" "compute" {
   project = "${google_project.project.project_id}"
   service = "compute.googleapis.com"
@@ -124,11 +131,28 @@ resource "google_container_node_pool" "main-node-pool" {
 
     oauth_scopes = [
       "compute-rw",
+      "storage-rw",
       "logging-write",
-      "monitoring"
+      "monitoring",
     ]
 
     service_account = "${google_service_account.compute.email}"
     tags            = ["k8s-node", "default-node-pool"]
   }
+}
+
+resource "google_storage_bucket" "benchmark-output-storage" {
+  name          = "${google_project.project.project_id}-benchmark-outputs"
+  location      = "${var.region}"
+  force_destroy = "true"
+  project       = "${google_project.project.project_id}"
+
+  retention_policy {
+    is_locked        = false
+    retention_period = 604800
+  }
+}
+
+output "benchmark-output-storage" {
+  value = "${google_storage_bucket.benchmark-output-storage.name}"
 }

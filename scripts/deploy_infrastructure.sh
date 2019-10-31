@@ -21,9 +21,3 @@ fi
 
 # Roll out infrastructure
 terraform apply -auto-approve -var "project_name=${PROJECT_NAME}"
-
-PROJECT_ID=$(terraform output google_project_id)
-REGION=$(terraform output region)
-
-# Login to cluster
-gcloud container clusters get-credentials runner-benchmark --region ${REGION} --project ${PROJECT_ID}
