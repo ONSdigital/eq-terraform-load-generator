@@ -149,7 +149,7 @@ resource "google_storage_bucket" "benchmark-output-storage" {
 
   retention_policy {
     is_locked        = false
-    retention_period = 604800
+    retention_period = 31536000
   }
 }
 
