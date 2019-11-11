@@ -17,11 +17,9 @@ scripts/deploy_infrastructure.sh ${PROJECT_NAME}
 
 PROJECT_ID=$(terraform output google_project_id)
 REGION=$(terraform output region)
-# Login to cluster
-gcloud container clusters get-credentials runner-benchmark --region ${REGION} --project ${PROJECT_ID}
-
 GCS_OUTPUT_BUCKET=$(terraform output benchmark-output-storage)
-scripts/deploy_benchmark.sh ${RUNNER_URL} ${GCS_OUTPUT_BUCKET}
+
+PROJECT_ID=${PROJECT_ID} REGION=${REGION} RUNNER_URL=${RUNNER_URL} GCS_OUTPUT_BUCKET=${GCS_OUTPUT_BUCKET} ./scripts/deploy_benchmark.sh
 
 echo
 echo "Testing Survey Runner URL: ${RUNNER_URL}"
