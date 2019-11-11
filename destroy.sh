@@ -8,4 +8,4 @@ if [[ -z "$PROJECT_NAME" ]]; then
 fi
 
 # Destroy infrastructure
-scripts/destroy_infrastructure.sh ${PROJECT_NAME}
+PROJECT_NAME=${PROJECT_NAME} scripts/destroy_infrastructure.sh

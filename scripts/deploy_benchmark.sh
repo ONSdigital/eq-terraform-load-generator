@@ -4,7 +4,7 @@ set -e
 
 TEMP_DIR=$(mktemp -d)
 
-# Clone Launcher Repo
+# Clone benchmark repo
 git clone --branch store_results_in_storge_bucket --depth 1 https://github.com/ONSdigital/eq-survey-runner-benchmark.git "${TEMP_DIR}"/eq-survey-runner-benchmark
 
 cd ${TEMP_DIR}/eq-survey-runner-benchmark

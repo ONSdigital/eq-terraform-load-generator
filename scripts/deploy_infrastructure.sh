@@ -2,7 +2,6 @@
 
 set -ex
 
-PROJECT_NAME=$1
 TERRAFORM_STATE_BUCKET="${TERRAFORM_STATE_BUCKET:-eq-terraform-load-generator-tfstate}"
 IMPORT_EXISTING_PROJECT="${IMPORT_EXISTING_PROJECT:-false}"
 
