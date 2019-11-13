@@ -5,7 +5,7 @@ set -e
 TEMP_DIR=$(mktemp -d)
 
 # Clone benchmark repo
-git clone --branch store_results_in_storge_bucket --depth 1 https://github.com/ONSdigital/eq-survey-runner-benchmark.git "${TEMP_DIR}"/eq-survey-runner-benchmark
+git clone --branch master --depth 1 https://github.com/ONSdigital/eq-survey-runner-benchmark.git "${TEMP_DIR}"/eq-survey-runner-benchmark
 
 cd ${TEMP_DIR}/eq-survey-runner-benchmark
 
@@ -18,7 +18,7 @@ helm tiller run \
     k8s/helm \
     --set host=${RUNNER_URL} \
     --set locustOptions="--no-web -c 1 -r 1 -t 1m --csv=output -L WARNING" \
-    --set container.image=eu.gcr.io/census-eq-ci/eq-survey-runner-benchmark:store_results_in_storge_bucket \
+    --set container.image=eu.gcr.io/census-eq-ci/eq-survey-runner-benchmark:latest \
     --set output.bucket=${GCS_OUTPUT_BUCKET}
 
 rm -rf "${TEMP_DIR}"
