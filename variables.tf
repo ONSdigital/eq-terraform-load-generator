@@ -28,3 +28,8 @@ variable "k8s_min_master_version" {
   description = "The minimum version of the master"
   default     = "1.13"
 }
+
+variable "machine_type" {
+  description = "The machine type to provision"
+  default     = "n1-standard-1"
+}
