@@ -1,0 +1,31 @@
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: google/cloud-sdk
+  params:
+    <<: *common_infrastructure_params
+    IMPORT_EXISTING_PROJECT: ((import_existing_project))
+  inputs:
+    - name: eq-terraform-load-generator
+  run:
+    path: bash
+    args:
+      - -exc
+      - |
+        apt-get install -y unzip
+
+        git clone https://github.com/kamatama41/tfenv.git ~/.tfenv && \
+        ln -s /root/.tfenv/bin/* /usr/local/bin
+
+        cat >$GOOGLE_APPLICATION_CREDENTIALS <<EOL
+        $SERVICE_ACCOUNT_JSON
+        EOL
+
+        gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
+
+        cd eq-terraform-load-generator
+
+        tfenv install
+
+        ./scripts/deploy_infrastructure.sh
