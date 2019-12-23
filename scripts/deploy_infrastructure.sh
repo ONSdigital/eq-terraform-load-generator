@@ -14,7 +14,7 @@ if [ "$IMPORT_EXISTING_PROJECT" = true ]; then
         echo "State contains a google project. Not importing"
     else
         echo "State does not contain a google project. Importing $PROJECT_NAME"
-        terraform import google_project.project $PROJECT_NAME
+        terraform import -var "project_name=${PROJECT_NAME}" google_project.project $PROJECT_NAME
     fi
 fi
 
