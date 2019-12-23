@@ -1,0 +1,59 @@
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: theorf/google-cloud-sdk-helm
+params:
+  SERVICE_ACCOUNT_JSON: ((gcp.service_account_json))
+  IMPORT_EXISTING_PROJECT: ((import_existing_project))
+inputs:
+  - name: eq-survey-runner-benchmark
+run:
+  path: bash
+  args:
+    - -exc
+    - |
+      apt-get install -y procps
+
+      cat >~/gcloud-service-key.json <<EOL
+      $SERVICE_ACCOUNT_JSON
+      EOL
+
+      gcloud auth activate-service-account --key-file ~/gcloud-service-key.json
+
+      cd eq-survey-runner-benchmark
+
+      helm init --client-only
+      helm plugin install https://github.com/rimusz/helm-tiller
+
+      FILTER_BY=$(if [[ "$IMPORT_EXISTING_PROJECT" = true ]]; then echo "project_id"; else echo "name"; fi)
+
+      PROJECT_ID=($(gcloud projects list --filter=${FILTER_BY}="((project_name))" --format="value(PROJECT_ID)"))
+
+      [[ "${#PROJECT_ID[@]}" = 1 ]] || exit 1
+
+      GCS_OUTPUT_BUCKET=${PROJECT_ID}-benchmark-outputs
+      COMMIT_HASH=$(cat .git/HEAD | xargs echo -n)
+      RUNTIME_DATE_STRING="$(date +'%Y-%m-%dT%H:%M:%S')"
+
+      gcloud container clusters get-credentials runner-benchmark --region ((region)) --project ${PROJECT_ID}
+
+      helm tiller run \
+        helm upgrade --install \
+        runner-benchmark \
+        k8s/helm \
+        --set requestsJson="((requests_json))" \
+        --set locustOptions="((locust_options))" \
+        --set host=https://((runner_fully_qualified_domain_name)) \
+        --set container.image=((docker_registry))/eq-survey-runner-benchmark:${COMMIT_HASH} \
+        --set userWaitTimeMinSeconds=((user_wait_time_min_seconds)) \
+        --set userWaitTimemaxSeconds=((user_wait_time_max_seconds)) \
+        --set cpu=((requested_cpu_per_pod)) \
+        --set memory=((requested_memory_per_pod)) \
+        --set parallelism=((parallelism)) \
+        --set output.bucket=${GCS_OUTPUT_BUCKET} \
+        --set output.directory="timed-schedule/${RUNTIME_DATE_STRING}"
+
+      JOB_NAME=$(kubectl get jobs '--output=jsonpath={.items[*].metadata.name}')
+
+      kubectl wait --for=condition=complete --timeout=60m job/${JOB_NAME}
