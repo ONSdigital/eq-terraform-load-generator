@@ -25,16 +25,16 @@ run:
 
       tfenv install
 
-      terraform init --upgrade --backend-config prefix=((project_name)) -var "project_name=((project_name))" --backend-config bucket=((load_generator_tf_state_bucket))
+      terraform init --upgrade --backend-config prefix=${PROJECT_NAME} -var "project_name=${PROJECT_NAME}" --backend-config bucket=${load_generator_tf_state_bucket}
 
       # Do not delete the project or bucket.
       terraform state rm google_project.project
       terraform state rm google_storage_bucket.benchmark-output-storage
 
       # Destroy infrastructure
-      terraform destroy --auto-approve -var "project_name=((project_name))"
+      terraform destroy --auto-approve -var "project_name=${PROJECT_NAME}"
 
-      PROJECT_ID=($(gcloud projects list --filter=name="((project_name))" --format="value(PROJECT_ID)"))
+      PROJECT_ID=($(gcloud projects list --filter=name="${PROJECT_NAME}" --format="value(PROJECT_ID)"))
 
       # Import project and bucket resouce back into the state
       terraform import google_project.project "$PROJECT_ID"
