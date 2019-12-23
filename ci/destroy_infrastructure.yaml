@@ -1,0 +1,41 @@
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: google/cloud-sdk
+inputs:
+  - name: eq-terraform-load-generator
+run:
+  path: bash
+  args:
+    - -exc
+    - |
+      apt-get install -y unzip
+
+      git clone https://github.com/kamatama41/tfenv.git ~/.tfenv && \
+      ln -s /root/.tfenv/bin/* /usr/local/bin
+
+      cat >$GOOGLE_APPLICATION_CREDENTIALS <<EOL
+      $SERVICE_ACCOUNT_JSON
+      EOL
+
+      gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
+
+      cd eq-terraform-load-generator
+
+      tfenv install
+
+      terraform init --upgrade --backend-config prefix=((project_name)) -var "project_name=((project_name))" --backend-config bucket=((load_generator_tf_state_bucket))
+
+      # Do not delete the project or bucket.
+      terraform state rm google_project.project
+      terraform state rm google_storage_bucket.benchmark-output-storage
+
+      # Destroy infrastructure
+      terraform destroy --auto-approve -var "project_name=((project_name))"
+
+      PROJECT_ID=($(gcloud projects list --filter=name="((project_name))" --format="value(PROJECT_ID)"))
+
+      # Import project and bucket resouce back into the state
+      terraform import google_project.project "$PROJECT_ID"
+      terraform import google_storage_bucket.benchmark-output-storage ${PROJECT_ID}-benchmark-outputs
