@@ -1,8 +1,4 @@
 platform: linux
-image_resource:
-  type: docker-image
-  source:
-    repository: $BUILD_IMAGE_DOCKER_REGISTRY/eq-infrastructure-build-image
 inputs:
   - name: eq-terraform-load-generator
 run:
@@ -22,5 +18,3 @@ run:
       tfenv use "$(< .terraform-version)"
 
       ./scripts/deploy_infrastructure.sh
-params:
-  - BUILD_IMAGE_DOCKER_REGISTRY: $BUILD_IMAGE_DOCKER_REGISTRY
