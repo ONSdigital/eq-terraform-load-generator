@@ -1,8 +1,4 @@
 platform: linux
-image_resource:
-  type: docker-image
-  source:
-    repository: google/cloud-sdk
 inputs:
   - name: eq-terraform-load-generator
 run:
@@ -10,11 +6,6 @@ run:
   args:
     - -exc
     - |
-      apt-get install -y unzip
-
-      git clone https://github.com/kamatama41/tfenv.git ~/.tfenv && \
-      ln -s /root/.tfenv/bin/* /usr/local/bin
-
       cat >$GOOGLE_APPLICATION_CREDENTIALS <<EOL
       $SERVICE_ACCOUNT_JSON
       EOL
