@@ -10,43 +10,46 @@ resource "random_id" "id" {
 }
 
 provider "google" {
-  region = "${var.region}"
+  region = var.region
 }
 
 output "region" {
-  value = "${var.region}"
+  value = var.region
 }
 
 resource "google_project" "project" {
-  name            = "${var.project_name}"
-  project_id      = "${random_id.id.hex}"
-  folder_id       = "${var.gcp_folder_id}"
-  billing_account = "${var.gcp_billing_account}"
+  name            = var.project_name
+  project_id      = random_id.id.hex
+  folder_id       = var.gcp_folder_id
+  billing_account = var.gcp_billing_account
 
-  labels {
+  labels = {
     terraform = "eq-terraform-load-generator"
-    team      = "${var.project_team}"
-    env       = "${var.project_env}"
+    team      = var.project_team
+    env       = var.project_env
   }
 
   lifecycle {
-    ignore_changes = ["project_id", "name"]
+    ignore_changes = [
+      project_id,
+      name,
+    ]
   }
 }
 
 output "google_project_id" {
-  value = "${google_project.project.project_id}"
+  value = google_project.project.project_id
 }
 
 resource "google_project_service" "container" {
-  project = "${google_project.project.project_id}"
+  project = google_project.project.project_id
   service = "container.googleapis.com"
 
   disable_dependent_services = true
 }
 
 resource "google_project_service" "compute" {
-  project = "${google_project.project.project_id}"
+  project = google_project.project.project_id
   service = "compute.googleapis.com"
 
   disable_dependent_services = true
@@ -54,7 +57,7 @@ resource "google_project_service" "compute" {
 }
 
 resource "google_project_service" "logging" {
-  project = "${google_project.project.project_id}"
+  project = google_project.project.project_id
   service = "logging.googleapis.com"
 
   disable_dependent_services = true
@@ -62,10 +65,10 @@ resource "google_project_service" "logging" {
 }
 
 resource "google_compute_network" "k8s" {
-  depends_on              = ["google_project_service.compute"]
+  depends_on              = [google_project_service.compute]
   name                    = "k8s"
   auto_create_subnetworks = "true"
-  project                 = "${google_project.project.project_id}"
+  project                 = google_project.project.project_id
 }
 
 // GKE
@@ -74,11 +77,11 @@ resource "google_compute_network" "k8s" {
 resource "google_service_account" "compute" {
   account_id   = "compute"
   display_name = "Compute Engine service account"
-  project      = "${google_project.project.project_id}"
+  project      = google_project.project.project_id
 }
 
 resource "google_project_iam_member" "compute" {
-  project = "${google_project.project.project_id}"
+  project = google_project.project.project_id
   role    = "roles/editor"
   member  = "serviceAccount:${google_service_account.compute.email}"
 }
@@ -86,12 +89,12 @@ resource "google_project_iam_member" "compute" {
 resource "google_container_cluster" "runner-benchmark" {
   name                     = "runner-benchmark"
   description              = "Kubernetes Cluster - Dev Benchmark environment"
-  location                 = "${var.region}"
-  min_master_version       = "${var.k8s_min_master_version}"
+  location                 = var.region
+  min_master_version       = var.k8s_min_master_version
   initial_node_count       = 1
   remove_default_node_pool = true
-  project                  = "${google_project.project.project_id}"
-  network                  = "${google_compute_network.k8s.self_link}"
+  project                  = google_project.project.project_id
+  network                  = google_compute_network.k8s.self_link
 
   // Basic auth is disabled by setting user/pass to empty strings
   master_auth {
@@ -106,14 +109,17 @@ resource "google_container_cluster" "runner-benchmark" {
 
 resource "google_container_node_pool" "main-node-pool" {
   name       = "main-node-pool"
-  location   = "${var.region}"
-  cluster    = "${google_container_cluster.runner-benchmark.name}"
+  location   = var.region
+  cluster    = google_container_cluster.runner-benchmark.name
   node_count = 1
-  project    = "${google_project.project.project_id}"
-  version    = "${var.k8s_min_master_version}"
+  project    = google_project.project.project_id
+  version    = var.k8s_min_master_version
 
   lifecycle {
-    ignore_changes = ["node_count", "version"]
+    ignore_changes = [
+      node_count,
+      version,
+    ]
   }
 
   autoscaling {
@@ -136,16 +142,16 @@ resource "google_container_node_pool" "main-node-pool" {
       "monitoring",
     ]
 
-    service_account = "${google_service_account.compute.email}"
+    service_account = google_service_account.compute.email
     tags            = ["k8s-node", "default-node-pool"]
   }
 }
 
 resource "google_storage_bucket" "benchmark-output-storage" {
   name          = "${google_project.project.project_id}-benchmark-outputs"
-  location      = "${var.region}"
+  location      = var.region
   force_destroy = "true"
-  project       = "${google_project.project.project_id}"
+  project       = google_project.project.project_id
 
   retention_policy {
     is_locked        = false
@@ -154,5 +160,5 @@ resource "google_storage_bucket" "benchmark-output-storage" {
 }
 
 output "benchmark-output-storage" {
-  value = "${google_storage_bucket.benchmark-output-storage.name}"
+  value = google_storage_bucket.benchmark-output-storage.name
 }
