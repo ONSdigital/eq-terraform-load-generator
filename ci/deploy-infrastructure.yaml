@@ -10,7 +10,7 @@ run:
     - -exc
     - |
       cat >((google_application_credentials)) <<EOL
-      $SERVICE_ACCOUNT_JSON
+      ((gcp.service_account_json))
       EOL
 
       gcloud auth activate-service-account --key-file ((google_application_credentials))
