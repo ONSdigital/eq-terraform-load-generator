@@ -13,7 +13,7 @@ run:
       ((gcp.service_account_json))
       EOL
 
-      gcloud auth activate-service-account --key-file ((google_application_credentials))
+      gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
 
       cd eq-terraform-load-generator
 
