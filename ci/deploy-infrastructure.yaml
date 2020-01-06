@@ -9,11 +9,11 @@ run:
   args:
     - -exc
     - |
-      cat >((google_application_credentials)) <<EOL
+      cat >$GOOGLE_APPLICATION_CREDENTIALS <<EOL
       $SERVICE_ACCOUNT_JSON
       EOL
 
-      gcloud auth activate-service-account --key-file ((google_application_credentials))
+      gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
 
       cd eq-terraform-load-generator
 
