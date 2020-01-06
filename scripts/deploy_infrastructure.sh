@@ -2,9 +2,6 @@
 
 set -ex
 
-TERRAFORM_STATE_BUCKET="${TERRAFORM_STATE_BUCKET:-eq-terraform-load-generator-tfstate}"
-IMPORT_EXISTING_PROJECT="${IMPORT_EXISTING_PROJECT:-false}"
-
 terraform init --upgrade --backend-config prefix=${PROJECT_NAME} --backend-config bucket=${TERRAFORM_STATE_BUCKET}
 
 if [ "$IMPORT_EXISTING_PROJECT" = true ]; then
