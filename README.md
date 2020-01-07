@@ -32,7 +32,7 @@ Rename `terraform.tfvars.example` to `terraform.tfvars` and fill in the values. 
 
 Create with `PROJECT_NAME=your-project-name RUNNER_URL=https://your-runner.gcp.dev.eq.ons.digital ./create.sh`
 
-Destroy with `PROJECT_NAME=your-project-name ./destroy.sh`
+Destroy with `PROJECT_NAME=your-project-name ./destroy.sh`. This will destory all resources except the project itself and the assosciated storage bucket. To permenantly destroy the infrastructure, including the project and storage bucket, delete the project via the GCP UI.
 
 If you are deploying to an existing environment, you can use the `IMPORT_EXISTING_PROJECT` and the `PROJECT_NAME` variable to show this:
 ```
