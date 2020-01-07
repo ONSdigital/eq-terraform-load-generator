@@ -3,7 +3,7 @@ inputs:
   - name: eq-terraform-load-generator
 params:
   TERRAFORM_STATE_BUCKET: 'eq-terraform-load-generator-tfstate'
-  IMPORT_EXISTING_PROJECT: false'
+  IMPORT_EXISTING_PROJECT: false
 run:
   path: bash
   args:
