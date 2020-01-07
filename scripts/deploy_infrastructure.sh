@@ -2,6 +2,7 @@
 
 set -ex
 
+tfenv use "$(< .terraform-version)"
 terraform init --upgrade --backend-config prefix=${PROJECT_NAME} --backend-config bucket=${TERRAFORM_STATE_BUCKET}
 
 if [ "$IMPORT_EXISTING_PROJECT" = true ]; then
