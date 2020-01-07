@@ -14,4 +14,5 @@ run:
       ((gcp.service_account_json))
       EOL
 
-      eq-terraform-load-generator/scripts/deploy_infrastructure.sh
+      cd eq-terraform-load-generator
+      ./scripts/deploy_infrastructure.sh
