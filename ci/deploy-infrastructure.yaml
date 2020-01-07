@@ -13,7 +13,7 @@ run:
       $SERVICE_ACCOUNT_JSON
       EOL
 
-      gcloud auth activate-service-account --key-file /root/gcloud-service-key.json
+      gcloud auth activate-service-account ((service_account_address)) --key-file /root/gcloud-service-key.json
 
       cd eq-terraform-load-generator
 
