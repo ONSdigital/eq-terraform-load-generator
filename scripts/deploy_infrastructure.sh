@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -ex
+set -euxo pipefail
 
 tfenv use "$(< .terraform-version)"
 terraform init --upgrade --backend-config prefix=${PROJECT_NAME} --backend-config bucket=${TERRAFORM_STATE_BUCKET}

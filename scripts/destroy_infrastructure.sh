@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 
-set -e
+set -euxo pipefail
 
-TERRAFORM_STATE_BUCKET="${TERRAFORM_STATE_BUCKET:-eq-terraform-load-generator-tfstate}"
+tfenv use "$(< .terraform-version)"
 
-terraform init --upgrade --backend-config prefix=${PROJECT_NAME} -var "project_name=${PROJECT_NAME}" --backend-config bucket=${TERRAFORM_STATE_BUCKET}
+terraform init --upgrade --backend-config prefix=${PROJECT_NAME} -var "project_name=${PROJECT_NAME}" --backend-config bucket=${LOAD_GENERATOR_TF_STATE_BUCKET}
 
-# This will get destroyed as part of deleting the project
-terraform state rm google_compute_network.k8s
+# Do not delete the project or bucket.
+terraform state rm google_project.project
+terraform state rm google_storage_bucket.benchmark-output-storage
 
 # Destroy infrastructure
-terraform destroy -auto-approve -var "project_name=${PROJECT_NAME}"
+terraform destroy --auto-approve -var "project_name=${PROJECT_NAME}"
+
+# Import project and bucket resouce back into the state
+terraform import google_project.project "$PROJECT_ID"
+terraform import google_storage_bucket.benchmark-output-storage ${PROJECT_ID}-benchmark-outputs
