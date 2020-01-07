@@ -10,7 +10,7 @@ run:
     - -exc
     - |
       cat >/root/gcloud-service-key.json <<EOL
-      ((gcp.service_account_json))
+      $SERVICE_ACCOUNT_JSON
       EOL
 
       gcloud auth activate-service-account --key-file /root/gcloud-service-key.json
