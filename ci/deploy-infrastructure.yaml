@@ -4,7 +4,6 @@ inputs:
 params:
   TERRAFORM_STATE_BUCKET: 'eq-terraform-load-generator-tfstate'
   IMPORT_EXISTING_PROJECT: false
-  SERVICE_ACCOUNT_JSON:
   GOOGLE_APPLICATION_CREDENTIALS: /root/gcloud-service-key.json
 run:
   path: bash
