@@ -13,7 +13,7 @@ if [[ -z "$RUNNER_URL" ]]; then
 fi
 
 # Deploy infrastructure
-PROJECT_NAME=${PROJECT_NAME} scripts/deploy_infrastructure.sh
+TF_VAR_PROJECT_NAME=${PROJECT_NAME} scripts/deploy_infrastructure.sh
 
 PROJECT_ID=$(terraform output google_project_id)
 REGION=$(terraform output region)

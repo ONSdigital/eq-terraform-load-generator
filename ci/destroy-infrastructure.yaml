@@ -1,6 +1,8 @@
 platform: linux
 inputs:
   - name: eq-terraform-load-generator
+params:
+  GOOGLE_APPLICATION_CREDENTIALS: /root/gcloud-service-key.json
 run:
   path: bash
   args:
@@ -11,9 +13,7 @@ run:
       EOL
 
       gcloud auth activate-service-account --key-file /root/gcloud-service-key.json
-      PROJECT_ID=($(gcloud projects list --filter=name="${PROJECT_NAME}" --format="value(PROJECT_ID)"))
 
       cd eq-terraform-load-generator
 
-      ./destroy-infrastructure.yaml
-
+      PROJECT_ID=$(gcloud projects list --filter=name="${TF_VAR_project_name}" --format="value(PROJECT_ID)") ./scripts/destroy_infrastructure.sh

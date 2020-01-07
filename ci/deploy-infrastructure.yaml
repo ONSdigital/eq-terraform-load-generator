@@ -2,8 +2,7 @@ platform: linux
 inputs:
   - name: eq-terraform-load-generator
 params:
-  TERRAFORM_STATE_BUCKET: 'eq-terraform-load-generator-tfstate'
-  IMPORT_EXISTING_PROJECT: false
+  IMPORT_EXISTING_PROJECT: true
   GOOGLE_APPLICATION_CREDENTIALS: /root/gcloud-service-key.json
 run:
   path: bash
