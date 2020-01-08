@@ -3,7 +3,8 @@ inputs:
   - name: eq-terraform-load-generator
 image_resource:
   type: docker-image
-  source: ((docker.build_image_registry))/eq-infrastructure-build-image
+  source:
+    repository: ((image_registry))/eq-infrastructure-build-image
 params:
   GOOGLE_APPLICATION_CREDENTIALS: /root/gcloud-service-key.json
 run:
