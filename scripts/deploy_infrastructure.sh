@@ -7,15 +7,13 @@ TERRAFORM_STATE_BUCKET="${TERRAFORM_STATE_BUCKET:-eq-terraform-load-generator-tf
 tfenv use "$(< .terraform-version)"
 terraform init --upgrade --backend-config prefix=${TF_VAR_project_name} --backend-config bucket=${TERRAFORM_STATE_BUCKET}
 
-if [ "$IMPORT_EXISTING_PROJECT" = true ]; then
-    echo "Using existing project_id: $TF_VAR_project_name"
+echo "Using existing project_id: $TF_VAR_project_name"
 
-    if terraform state list | grep "google_project.project"; then
-        echo "State contains a google project. Not importing"
-    else
-        echo "State does not contain a google project. Importing $TF_VAR_project_name"
-        terraform import -var "project_name=${TF_VAR_project_name}" google_project.project $TF_VAR_project_name
-    fi
+if terraform state list | grep "google_project.project"; then
+    echo "State contains a google project. Not importing"
+else
+    echo "State does not contain a google project. Importing $TF_VAR_project_name"
+    terraform import -var "project_name=${TF_VAR_project_name}" google_project.project $TF_VAR_project_name
 fi
 
 # Roll out infrastructure

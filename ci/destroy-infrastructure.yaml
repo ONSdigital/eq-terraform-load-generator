@@ -8,12 +8,9 @@ run:
   args:
     - -exc
     - |
-      cat >/root/gcloud-service-key.json <<EOL
+      cat >$GOOGLE_APPLICATION_CREDENTIALS <<EOL
       ((gcp.service_account_json))
       EOL
 
-      gcloud auth activate-service-account --key-file /root/gcloud-service-key.json
-
       cd eq-terraform-load-generator
-
-      PROJECT_ID=$(gcloud projects list --filter=name="${TF_VAR_project_name}" --format="value(PROJECT_ID)") ./scripts/destroy_infrastructure.sh
+      ./scripts/destroy_infrastructure.sh

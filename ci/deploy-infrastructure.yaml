@@ -2,14 +2,13 @@ platform: linux
 inputs:
   - name: eq-terraform-load-generator
 params:
-  IMPORT_EXISTING_PROJECT: true
   GOOGLE_APPLICATION_CREDENTIALS: /root/gcloud-service-key.json
 run:
   path: bash
   args:
     - -exc
     - |
-      cat >/root/gcloud-service-key.json  <<EOL
+      cat >$GOOGLE_APPLICATION_CREDENTIALS  <<EOL
       ((gcp.service_account_json))
       EOL
 
