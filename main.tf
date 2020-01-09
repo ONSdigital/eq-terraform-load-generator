@@ -4,11 +4,6 @@ terraform {
   }
 }
 
-resource "random_id" "id" {
-  byte_length = 4
-  prefix      = "benchmark-${var.project_name}-"
-}
-
 provider "google" {
   region = var.region
 }
@@ -18,14 +13,14 @@ output "region" {
 }
 
 resource "google_project_service" "container" {
-  project = var.project_name
+  project = var.project_id
   service = "container.googleapis.com"
 
   disable_dependent_services = true
 }
 
 resource "google_project_service" "compute" {
-  project = var.project_name
+  project = var.project_id
   service = "compute.googleapis.com"
 
   disable_dependent_services = true
@@ -33,7 +28,7 @@ resource "google_project_service" "compute" {
 }
 
 resource "google_project_service" "logging" {
-  project = var.project_name
+  project = var.project_id
   service = "logging.googleapis.com"
 
   disable_dependent_services = true
@@ -44,7 +39,7 @@ resource "google_compute_network" "k8s" {
   depends_on              = [google_project_service.compute]
   name                    = "k8s"
   auto_create_subnetworks = "true"
-  project                 = var.project_name
+  project                 = var.project_id
 }
 
 // GKE
@@ -53,11 +48,11 @@ resource "google_compute_network" "k8s" {
 resource "google_service_account" "compute" {
   account_id   = "compute"
   display_name = "Compute Engine service account"
-  project      = var.project_name
+  project      = var.project_id
 }
 
 resource "google_project_iam_member" "compute" {
-  project = var.project_name
+  project = var.project_id
   role    = "roles/editor"
   member  = "serviceAccount:${google_service_account.compute.email}"
 }
@@ -69,7 +64,7 @@ resource "google_container_cluster" "runner-benchmark" {
   min_master_version       = var.k8s_min_master_version
   initial_node_count       = 1
   remove_default_node_pool = true
-  project                  = var.project_name
+  project                  = var.project_id
   network                  = google_compute_network.k8s.self_link
 
   // Basic auth is disabled by setting user/pass to empty strings
@@ -88,7 +83,7 @@ resource "google_container_node_pool" "main-node-pool" {
   location   = var.region
   cluster    = google_container_cluster.runner-benchmark.name
   node_count = 1
-  project    = var.project_name
+  project    = var.project_id
   version    = var.k8s_min_master_version
 
   lifecycle {
@@ -124,10 +119,10 @@ resource "google_container_node_pool" "main-node-pool" {
 }
 
 resource "google_storage_bucket" "benchmark-output-storage" {
-  name          = "${var.project_name}-benchmark-outputs"
+  name          = "${var.project_id}-benchmark-outputs"
   location      = var.region
   force_destroy = "true"
-  project       = var.project_name
+  project       = var.project_id
 
   retention_policy {
     is_locked        = false
