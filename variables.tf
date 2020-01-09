@@ -10,7 +10,7 @@ variable "gcp_folder_id" {
   description = "The numeric ID of the folder this project belongs to"
 }
 
-variable "project_name" {
+variable "project_id" {
   description = "The project name in GCP"
 }
 

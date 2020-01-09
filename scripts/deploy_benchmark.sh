@@ -10,7 +10,7 @@ git clone --branch master --depth 1 https://github.com/ONSdigital/eq-survey-runn
 cd ${TEMP_DIR}/eq-survey-runner-benchmark
 
 # Login to cluster
-gcloud container clusters get-credentials runner-benchmark --region ${REGION} --project ${PROJECT_NAME}
+gcloud container clusters get-credentials runner-benchmark --region ${REGION} --project ${PROJECT_ID}
 
 helm tiller run \
     helm upgrade --install \

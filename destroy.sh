@@ -2,10 +2,10 @@
 
 set -e
 
-if [[ -z "$PROJECT_NAME" ]]; then
-  echo "Missing PROJECT_NAME variable"
+if [[ -z "$PROJECT_ID" ]]; then
+  echo "Missing PROJECT_ID variable"
   exit 1
 fi
 
 # Destroy infrastructure
-TF_VAR_project_name=${PROJECT_NAME} scripts/destroy_infrastructure.sh
+TF_VAR_project_id=${PROJECT_ID} scripts/destroy_infrastructure.sh

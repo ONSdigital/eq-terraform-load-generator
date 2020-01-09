@@ -30,17 +30,17 @@ Either manually create a new project on GCP or use an existing project. Make sur
 
 Rename `terraform.tfvars.example` to `terraform.tfvars` and fill in the values. (Ask a team member for help).
 
-Create with `PROJECT_NAME=your-project-name RUNNER_URL=https://your-runner.gcp.dev.eq.ons.digital ./create.sh`
+Create with `PROJECT_ID=your-project-name RUNNER_URL=https://your-runner.gcp.dev.eq.ons.digital ./create.sh`
 
-Destroy with `PROJECT_NAME=your-project-name ./destroy.sh`. This will destory all resources except the project itself and the assosciated storage bucket. To permenantly destroy the infrastructure, including the project and storage bucket, delete the project via the GCP UI.
+Destroy with `PROJECT_ID=your-project-name ./destroy.sh`. This will destory all resources except the project itself and the assosciated storage bucket. To permenantly destroy the infrastructure, including the project and storage bucket, delete the project via the GCP UI.
 
 ```
-PROJECT_NAME=existing-project-id RUNNER_URL=https://your-runner.gcp.dev.eq.ons.digital ./create.sh
+PROJECT_ID=existing-project-id RUNNER_URL=https://your-runner.gcp.dev.eq.ons.digital ./create.sh
 ```
 
 If you want to vary the default parameters Locust uses on start, you can specify them using the LOCUST_OPTS environment variable:
 ```
-LOCUST_OPTS="-f locustfile.py -c 1000 -r 50 -L WARNING" RUNNER_URL=http://your-runner.gcp.dev.eq.ons.digital PROJECT_NAME=your-project-name ./create.sh
+LOCUST_OPTS="-f locustfile.py -c 1000 -r 50 -L WARNING" RUNNER_URL=http://your-runner.gcp.dev.eq.ons.digital PROJECT_ID=your-project-name ./create.sh
 ```
 Will create an environment running locust with a web interface with 1000 clients and a hatch rate of 50, with a log level of warnings and above.
 
