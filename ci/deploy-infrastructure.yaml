@@ -12,7 +12,7 @@ run:
   args:
     - -exc
     - |
-      cat >$GOOGLE_APPLICATION_CREDENTIALS  <<EOL
+      cat >$GOOGLE_APPLICATION_CREDENTIALS <<EOL
       ((gcp.service_account_json))
       EOL
 

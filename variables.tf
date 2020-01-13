@@ -11,7 +11,7 @@ variable "gcp_folder_id" {
 }
 
 variable "project_id" {
-  description = "The project name in GCP"
+  description = "The project id in GCP"
 }
 
 variable "project_env" {

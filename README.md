@@ -32,7 +32,7 @@ Rename `terraform.tfvars.example` to `terraform.tfvars` and fill in the values. 
 
 Create with `PROJECT_ID=your-project-id RUNNER_URL=https://your-runner.gcp.dev.eq.ons.digital ./create.sh`
 
-Destroy with `PROJECT_ID=your-project-id ./destroy.sh`. This will destory all resources except the project itself and the assosciated storage bucket. To permenantly destroy the infrastructure, including the project and storage bucket, delete the project via the GCP UI.
+Destroy with `PROJECT_ID=your-project-id ./destroy.sh`. This will destroy all resources except the project itself and the assosciated storage bucket. To permenantly destroy the infrastructure, including the project and storage bucket, delete the project via the GCP UI.
 
 If you want to vary the default parameters Locust uses on start, you can specify them using the LOCUST_OPTS environment variable:
 ```
