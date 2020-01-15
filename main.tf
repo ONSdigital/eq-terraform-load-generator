@@ -104,7 +104,7 @@ resource "google_container_node_pool" "main-node-pool" {
   }
 
   node_config {
-    machine_type = "n1-standard-1"
+    machine_type = var.machine_type
 
     oauth_scopes = [
       "compute-rw",
