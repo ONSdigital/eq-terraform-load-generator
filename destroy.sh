@@ -8,4 +8,4 @@ if [[ -z "$PROJECT_ID" ]]; then
 fi
 
 # Destroy infrastructure
-TF_VAR_project_id=${PROJECT_ID} scripts/destroy_infrastructure.sh
+PROJECT_ID=${PROJECT_ID} scripts/destroy_infrastructure.sh

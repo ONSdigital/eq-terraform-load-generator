@@ -6,7 +6,7 @@ TERRAFORM_STATE_BUCKET="${TERRAFORM_STATE_BUCKET:-eq-terraform-load-generator-tf
 
 tfenv use "$(< .terraform-version)"
 
-terraform init --upgrade --backend-config prefix=${TF_VAR_project_id} --backend-config bucket=${TERRAFORM_STATE_BUCKET}
+terraform init --upgrade --backend-config prefix=${PROJECT_ID} --backend-config bucket=${TERRAFORM_STATE_BUCKET}
 
 # Do not delete the bucket.
 terraform state rm google_storage_bucket.benchmark-output-storage
