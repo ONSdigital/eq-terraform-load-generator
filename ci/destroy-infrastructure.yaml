@@ -5,6 +5,7 @@ params:
   GOOGLE_APPLICATION_CREDENTIALS: /root/gcloud-service-key.json
   TF_VAR_gcp_folder_id: ((gcp.folder_id))
   TF_VAR_gcp_billing_account: ((gcp.billing_account))
+  PROJECT_ID:
 image_resource:
   type: docker-image
   source:
