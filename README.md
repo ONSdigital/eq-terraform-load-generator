@@ -26,22 +26,17 @@ This folder contains the config for the EQ load generator infrastructure. It use
 
 ### Development
 
-Use a PROJECT_NAME name which follows the naming conventions here: https://cloud.google.com/storage/docs/naming
+Either manually create a new project on GCP or use an existing project. Make sure the project name follows the conventions here: https://cloud.google.com/storage/docs/naming
 
 Rename `terraform.tfvars.example` to `terraform.tfvars` and fill in the values. (Ask a team member for help).
 
-Create with `PROJECT_NAME=your-project-name RUNNER_URL=https://your-runner.gcp.dev.eq.ons.digital ./create.sh`
+Create with `PROJECT_ID=your-project-id RUNNER_URL=https://your-runner.gcp.dev.eq.ons.digital ./create.sh`
 
-Destroy with `PROJECT_NAME=your-project-name ./destroy.sh`
-
-If you are deploying to an existing environment, you can use the `IMPORT_EXISTING_PROJECT` and the `PROJECT_NAME` variable to show this:
-```
-IMPORT_EXISTING_PROJECT=true PROJECT_NAME=existing-project-id RUNNER_URL=https://your-runner.gcp.dev.eq.ons.digital ./create.sh
-```
+Destroy with `PROJECT_ID=your-project-id ./destroy.sh`. This will destroy all resources except the project itself and the assosciated storage bucket. To permenantly destroy the infrastructure, including the project and storage bucket, delete the project via the GCP UI.
 
 If you want to vary the default parameters Locust uses on start, you can specify them using the LOCUST_OPTS environment variable:
 ```
-LOCUST_OPTS="-f locustfile.py -c 1000 -r 50 -L WARNING" RUNNER_URL=http://your-runner.gcp.dev.eq.ons.digital PROJECT_NAME=your-project-name ./create.sh
+LOCUST_OPTS="-f locustfile.py -c 1000 -r 50 -L WARNING" RUNNER_URL=http://your-runner.gcp.dev.eq.ons.digital PROJECT_ID=your-project-id ./create.sh
 ```
 Will create an environment running locust with a web interface with 1000 clients and a hatch rate of 50, with a log level of warnings and above.
 

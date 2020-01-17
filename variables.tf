@@ -10,18 +10,8 @@ variable "gcp_folder_id" {
   description = "The numeric ID of the folder this project belongs to"
 }
 
-variable "project_name" {
-  description = "The project name in GCP"
-}
-
-variable "project_env" {
-  description = "The environment this project belongs to, for billing and reporting purposes, etc"
-  default     = "sandbox-eq"
-}
-
-variable "project_team" {
-  description = "The team this project belongs to, for billing and reporting purposes, etc"
-  default     = "eq"
+variable "project_id" {
+  description = "The project id in GCP"
 }
 
 variable "k8s_min_master_version" {
