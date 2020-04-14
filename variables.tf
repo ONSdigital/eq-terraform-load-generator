@@ -19,7 +19,12 @@ variable "k8s_min_master_version" {
   default     = "1.14"
 }
 
-variable "machine_type" {
+variable "k8s_machine_type" {
   description = "The machine type to provision"
   default     = "n1-standard-1"
+}
+
+variable "k8s_autoscaling_max_node_count" {
+  description = "The maximum number of Kubernetes nodes (per region)"
+  default     = 5
 }
