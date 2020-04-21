@@ -95,7 +95,7 @@ resource "google_container_node_pool" "main-node-pool" {
 
   autoscaling {
     min_node_count = 1
-    max_node_count = 5
+    max_node_count = var.k8s_autoscaling_max_node_count
   }
 
   management {
@@ -104,7 +104,7 @@ resource "google_container_node_pool" "main-node-pool" {
   }
 
   node_config {
-    machine_type = var.machine_type
+    machine_type = var.k8s_machine_type
 
     oauth_scopes = [
       "compute-rw",
