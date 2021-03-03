@@ -18,5 +18,5 @@ variable "k8s_machine_type" {
 
 variable "k8s_autoscaling_max_node_count" {
   description = "The maximum number of Kubernetes nodes (per region)"
-  default     = 5
+  default     = 1
 }

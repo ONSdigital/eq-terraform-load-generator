@@ -35,9 +35,9 @@ resource "google_project_service" "logging" {
   disable_on_destroy         = false
 }
 
-resource "google_compute_network" "k8s" {
+resource "google_compute_network" "load-k8s" {
   depends_on              = [google_project_service.compute]
-  name                    = "k8s"
+  name                    = "load-k8s"
   auto_create_subnetworks = "true"
   project                 = var.project_id
 }
