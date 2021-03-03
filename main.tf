@@ -35,9 +35,9 @@ resource "google_project_service" "logging" {
   disable_on_destroy         = false
 }
 
-resource "google_compute_network" "k8s_load" {
+resource "google_compute_network" "k8sload" {
   depends_on              = [google_project_service.compute]
-  name                    = "k8s_load"
+  name                    = "k8sload"
   auto_create_subnetworks = "true"
   project                 = var.project_id
 }
@@ -65,7 +65,7 @@ resource "google_container_cluster" "runner-benchmark" {
   initial_node_count       = 1
   remove_default_node_pool = true
   project                  = var.project_id
-  network                  = google_compute_network.k8s_load.self_link
+  network                  = google_compute_network.k8sload.self_link
 
   // Basic auth is disabled by setting user/pass to empty strings
   master_auth {
