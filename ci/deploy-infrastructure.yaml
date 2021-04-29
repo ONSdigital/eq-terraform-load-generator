@@ -7,7 +7,7 @@ params:
 image_resource:
   type: docker-image
   source:
-    repository: ((image_registry))/eq-infrastructure-build-image
+    repository: ((image_registry))/eq-infrastructure-deploy-image
 run:
   path: bash
   args:
