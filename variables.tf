@@ -8,7 +8,7 @@ variable "project_id" {
 
 variable "k8s_min_master_version" {
   description = "The minimum version of the master"
-  default     = "1.16"
+  default     = "1.17"
 }
 
 variable "k8s_machine_type" {
