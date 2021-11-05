@@ -69,9 +69,6 @@ resource "google_container_cluster" "runner-benchmark" {
 
   // Basic auth is disabled by setting user/pass to empty strings
   master_auth {
-    username = ""
-    password = ""
-
     client_certificate_config {
       issue_client_certificate = false
     }
