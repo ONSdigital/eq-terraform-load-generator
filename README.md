@@ -42,3 +42,18 @@ Will create an environment running locust with a web interface with 1000 clients
 
 Terraform state will by default be stored in the `eq-terraform-load-generator-tfstate` bucket, this bucket can be overridden by setting the `TERRAFORM_STATE_BUCKET` environment variable
 
+## Security Scanning
+
+Prior to the merge of any pull request, the repo should be scanned for security vulnerabilities with tfsec.
+
+tfsec can be installed via brew:
+```
+   brew install tfsec
+```
+
+To run tfsec use the following command from the project root directory
+```
+   tfsec .
+```
+
+Any issues identified that cannot be resolved should be logged in the following [confluence document](https://collaborate2.ons.gov.uk/confluence/pages/viewpage.action?spaceKey=SDC&title=EQ+Security+and+Vulnerabilities).
