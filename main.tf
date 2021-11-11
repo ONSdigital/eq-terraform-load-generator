@@ -67,7 +67,6 @@ resource "google_container_cluster" "runner-benchmark" {
   project                  = var.project_id
   network                  = google_compute_network.k8s.self_link
 
-  // Basic auth is disabled by setting user/pass to empty strings
   master_auth {
     client_certificate_config {
       issue_client_certificate = false
