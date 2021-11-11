@@ -44,16 +44,6 @@ Terraform state will by default be stored in the `eq-terraform-load-generator-tf
 
 ## Security Scanning
 
-Prior to the merge of any pull request, the repo should be scanned for security vulnerabilities with tfsec.
+Prior to the merge of any pull request, the repo should be scanned for security vulnerabilities with [tfsec](https://github.com/aquasecurity/tfsec).
 
-tfsec can be installed via brew:
-```
-   brew install tfsec
-```
-
-To run tfsec use the following command from the project root directory
-```
-   tfsec .
-```
-
-Any issues identified that cannot be resolved should be logged in the following [confluence document](https://collaborate2.ons.gov.uk/confluence/pages/viewpage.action?spaceKey=SDC&title=EQ+Security+and+Vulnerabilities).
+For more info on how to install and run tfsec see the team's approach [here](https://github.com/ONSdigital/eq-terraform-gcp#security-scanning).
