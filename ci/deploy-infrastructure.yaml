@@ -8,6 +8,7 @@ image_resource:
   type: docker-image
   source:
     repository: ((image_registry))/eq-infrastructure-deploy-image
+    tag: ((deploy_image_version))
 run:
   path: bash
   args:
