@@ -5,7 +5,7 @@ set -e
 TEMP_DIR=$(mktemp -d)
 
 # Clone benchmark repo
-git clone --branch master --depth 1 https://github.com/ONSdigital/eq-survey-runner-benchmark.git "${TEMP_DIR}"/eq-survey-runner-benchmark
+git clone --branch main --depth 1 https://github.com/ONSdigital/eq-survey-runner-benchmark.git "${TEMP_DIR}"/eq-survey-runner-benchmark
 
 cd ${TEMP_DIR}/eq-survey-runner-benchmark
 
