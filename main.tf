@@ -101,6 +101,7 @@ resource "google_container_node_pool" "main-node-pool" {
 
   node_config {
     machine_type = var.k8s_machine_type
+    preemptible  = true
 
     oauth_scopes = [
       "compute-rw",
