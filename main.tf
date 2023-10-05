@@ -66,6 +66,7 @@ resource "google_container_cluster" "runner-benchmark" {
   remove_default_node_pool = true
   project                  = var.project_id
   network                  = google_compute_network.k8s.self_link
+  deletion_protection      = false
 
   master_auth {
     client_certificate_config {
