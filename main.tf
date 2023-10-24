@@ -58,6 +58,7 @@ resource "google_project_iam_member" "compute" {
 }
 
 resource "google_container_cluster" "runner-benchmark" {
+  depends_on               = [google_project_service.container]
   name                     = "runner-benchmark"
   description              = "Kubernetes Cluster - Dev Benchmark environment"
   location                 = var.region
@@ -76,7 +77,7 @@ resource "google_container_cluster" "runner-benchmark" {
 }
 
 resource "google_container_node_pool" "main-node-pool" {
-  depends_on = [google_container_cluster.runner-benchmark, google_project_service.container, google_project_iam_member.compute]
+  depends_on = [google_project_service.container]
   name       = "main-node-pool"
   location   = var.region
   cluster    = google_container_cluster.runner-benchmark.name
