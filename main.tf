@@ -76,7 +76,7 @@ resource "google_container_cluster" "runner-benchmark" {
 }
 
 resource "google_container_node_pool" "main-node-pool" {
-  depends_on = [google_compute_network.k8s, google_service_account.compute]
+  depends_on = [google_container_cluster.runner-benchmark]
   name       = "main-node-pool"
   location   = var.region
   cluster    = google_container_cluster.runner-benchmark.name
