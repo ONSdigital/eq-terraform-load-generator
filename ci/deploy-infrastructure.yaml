@@ -5,7 +5,7 @@ params:
   GOOGLE_APPLICATION_CREDENTIALS: /root/gcloud-service-key.json
   PROJECT_ID:
 image_resource:
-  type: docker-image
+  type: registry-image
   source:
     repository: ((image_registry))/eq-infrastructure-deploy-image
     tag: ((deploy_image_version))
