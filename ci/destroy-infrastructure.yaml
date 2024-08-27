@@ -7,7 +7,7 @@ params:
 image_resource:
   type: registry-image
   source:
-    repository: ((image_registry))/eq-infrastructure-deploy-image
+    repository: ((image_registry))/eq-terraform-deploy-image
     tag: ((deploy_image_version))
 run:
   path: bash
