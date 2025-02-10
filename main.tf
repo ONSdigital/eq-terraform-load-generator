@@ -58,7 +58,6 @@ resource "google_project_iam_member" "compute" {
 }
 
 resource "google_container_cluster" "runner-benchmark" {
-  count = var.create_gke_cluster ? 1 : 0 
   depends_on               = [google_project_service.container]
   name                     = "runner-benchmark"
   description              = "Kubernetes Cluster - Dev Benchmark environment"
@@ -122,7 +121,6 @@ resource "google_container_node_pool" "main-node-pool" {
 }
 
 # resource "google_storage_bucket" "benchmark-output-storage" {
-#  count = var.create_gke_cluster ? 1 : 0 
 #  name          = "${var.project_id}-outputs"
 #  location      = var.region
 #  force_destroy = "true"
