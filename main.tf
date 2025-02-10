@@ -120,18 +120,18 @@ resource "google_container_node_pool" "main-node-pool" {
   }
 }
 
-# resource "google_storage_bucket" "benchmark-output-storage" {
-#  name          = "${var.project_id}-outputs"
-#  location      = var.region
-#  force_destroy = "true"
-#  project       = var.project_id
+resource "google_storage_bucket" "benchmark-output-storage" {
+  name          = "${var.project_id}-outputs"
+  location      = var.region
+  force_destroy = "true"
+  project       = var.project_id
 
-#  retention_policy {
-#    is_locked        = false
-#    retention_period = 31536000
-#  }
-# }
+  retention_policy {
+    is_locked        = false
+    retention_period = 31536000
+  }
+}
 
-# output "benchmark-output-storage" {
-#  value = google_storage_bucket.benchmark-output-storage.name
-# }
+output "benchmark-output-storage" {
+  value = google_storage_bucket.benchmark-output-storage.name
+}
