@@ -74,6 +74,14 @@ resource "google_container_cluster" "runner-benchmark" {
       issue_client_certificate = false
     }
   }
+
+  maintenance_policy {
+    daily_maintenance_window {
+      // GMT
+      start_time = "05:00"
+    }
+  }
+
 }
 
 resource "google_container_node_pool" "main-node-pool" {
