@@ -132,6 +132,6 @@ resource "google_container_node_pool" "main-node-pool" {
 #  }
 # }
 
-output "benchmark-output-storage" {
-  value = google_storage_bucket.benchmark-output-storage.name
-}
+# output "benchmark-output-storage" {
+#  value = google_storage_bucket.benchmark-output-storage.name
+# }
