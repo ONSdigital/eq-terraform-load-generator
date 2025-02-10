@@ -6,10 +6,10 @@ TERRAFORM_STATE_BUCKET="${TERRAFORM_STATE_BUCKET:-eq-terraform-load-generator-tf
 
 terraform init --upgrade --backend-config prefix=${PROJECT_ID} --backend-config bucket=${TERRAFORM_STATE_BUCKET}
 
-terraform import google_storage_bucket.benchmark-output-storage "${PROJECT_ID}-outputs"
+terraform state list
 
 # Do not delete the bucket.
-terraform state list
+terraform state rm google_storage_bucket.benchmark-output-storage
 
 # Destroy infrastructure
 terraform destroy --auto-approve -var "project_id=${PROJECT_ID}"
