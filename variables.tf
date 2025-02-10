@@ -20,13 +20,3 @@ variable "k8s_autoscaling_max_node_count" {
   description = "The maximum number of Kubernetes nodes (per region)"
   default     = 5
 }
-
-variable "create_gke_cluster" {
-  type    = bool
-  default = false
-}
-
-variable "create_storage_bucket" {
-  type    = bool
-  default = false
-}
