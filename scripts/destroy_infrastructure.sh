@@ -9,7 +9,7 @@ terraform init --upgrade --backend-config prefix=${PROJECT_ID} --backend-config 
 terraform import google_storage_bucket.benchmark-output-storage "${PROJECT_ID}-outputs"
 
 # Do not delete the bucket.
-terraform state rm google_storage_bucket.benchmark-output-storage
+terraform state list
 
 # Destroy infrastructure
 terraform destroy --auto-approve -var "project_id=${PROJECT_ID}"
