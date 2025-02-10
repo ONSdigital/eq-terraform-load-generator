@@ -6,7 +6,7 @@ TERRAFORM_STATE_BUCKET="${TERRAFORM_STATE_BUCKET:-eq-terraform-load-generator-tf
 
 terraform init --upgrade --backend-config prefix=${PROJECT_ID} --backend-config bucket=${TERRAFORM_STATE_BUCKET}
 
-terraform import google_storage_bucket.benchmark-output-storage eq-runner-daily-benchmark-outputs
+terraform import google_storage_bucket.benchmark-output-storage "${PROJECT_ID}-outputs"
 
 # Do not delete the bucket.
 terraform state rm google_storage_bucket.benchmark-output-storage
