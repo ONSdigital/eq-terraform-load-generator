@@ -74,6 +74,9 @@ resource "google_container_cluster" "runner-benchmark" {
       issue_client_certificate = false
     }
   }
+  lifecycle{
+    ignore_changes=all
+  }
 }
 
 resource "google_container_node_pool" "main-node-pool" {
@@ -126,6 +129,9 @@ resource "google_storage_bucket" "benchmark-output-storage" {
   retention_policy {
     is_locked        = false
     retention_period = 31536000
+  }
+   lifecycle {
+    ignore_changes = all
   }
 }
 
