@@ -10,6 +10,7 @@ terraform state list
 ps aux | grep terraform
 
 # Do not delete the bucket.
+terraform force-unlock 1739870893868283
 terraform import google_storage_bucket.benchmark-output-storage "${PROJECT_ID}-outputs"
 terraform state rm google_storage_bucket.benchmark-output-storage
 # Destroy infrastructure
