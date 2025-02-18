@@ -10,7 +10,7 @@ terraform state list
 ps aux | grep terraform
 
 # Do not delete the bucket.
-terraform import google_storage_bucket.benchmark-output-storage yuyutsu-benchmark-451209-outputs
+terraform import google_storage_bucket.benchmark-output-storage "${PROJECT_ID}-outputs"
 terraform state rm google_storage_bucket.benchmark-output-storage
 # Destroy infrastructure
 terraform destroy --auto-approve -var "project_id=${PROJECT_ID}"
