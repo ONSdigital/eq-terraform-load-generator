@@ -126,10 +126,11 @@ resource "google_container_node_pool" "main-node-pool" {
 }
 
 resource "google_storage_bucket" "benchmark-output-storage" {
-  name          = "${var.project_id}-outputs"
-  location      = var.region
-  force_destroy = "true"
-  project       = var.project_id
+  name                        = "${var.project_id}-outputs"
+  location                    = var.region
+  force_destroy               = "true"
+  project                     = var.project_id
+  uniform_bucket_level_access = true
 
   retention_policy {
     is_locked        = false
