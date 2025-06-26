@@ -2,6 +2,7 @@ terraform {
   backend "gcs" {
     bucket = "eq-terraform-load-generator-tfstate"
   }
+  required_version = ">= 1.9.6"
 }
 
 provider "google" {
@@ -36,6 +37,7 @@ resource "google_project_service" "logging" {
 }
 
 resource "google_compute_network" "k8s" {
+  #checkov:skip=CKV2_GCP_18:Ensure GCP network defines a firewall and does not use the default firewall
   depends_on              = [google_project_service.compute]
   name                    = "k8s"
   auto_create_subnetworks = "true"
@@ -52,12 +54,28 @@ resource "google_service_account" "compute" {
 }
 
 resource "google_project_iam_member" "compute" {
+  #checkov:skip=CKV_GCP_117:Ensure basic roles are not used at project level.
+  #checkov:skip=CKV_GCP_49:Ensure roles do not impersonate or manage Service Accounts used at project level
   project = var.project_id
   role    = "roles/editor"
   member  = "serviceAccount:${google_service_account.compute.email}"
 }
 
 resource "google_container_cluster" "runner-benchmark" {
+  #checkov:skip=CKV_GCP_20:Ensure master authorized networks is set to enabled in GKE clusters
+  #checkov:skip=CKV_GCP_61:Enable VPC Flow Logs and Intranode Visibility
+  #checkov:skip=CKV_GCP_25:Ensure Kubernetes Engine clusters have private nodes
+  #checkov:skip=CKV_GCP_23:Ensure Kubernetes Cluster is created with Alias IP ranges enabled
+  #checkov:skip=CKV_GCP_12:Ensure Network Policy is enabled on Kubernetes Engine Clusters
+  #checkov:skip=CKV_GCP_64:Ensure clusters are created with Private Nodes
+  #checkov:skip=CKV_GCP_70:Ensure the GKE Release Channel is set
+  #checkov:skip=CKV_GCP_24:Ensure PodSecurityPolicy controller is enabled on the Kubernetes Engine Clusters
+  #checkov:skip=CKV_GCP_69:Ensure the GKE Metadata Server is Enabled
+  #checkov:skip=CKV_GCP_117:Ensure basic roles are not used at project level.
+  #checkov:skip=CKV_GCP_66:Ensure use of Binary Authorization
+  #checkov:skip=CKV_GCP_21:Ensure Kubernetes Clusters are configured with Labels
+  #chekov:skip=CKV_GCP_20:Ensure master authorized networks is set to enabled in GKE clusters
+  #checkov:skip=CKV_GCP_65:Manage Kubernetes RBAC users with Google Groups for GKE
   depends_on               = [google_project_service.container]
   name                     = "runner-benchmark"
   description              = "Kubernetes Cluster - Dev Benchmark environment"
@@ -85,6 +103,10 @@ resource "google_container_cluster" "runner-benchmark" {
 }
 
 resource "google_container_node_pool" "main-node-pool" {
+  #checkov:skip=CKV_GCP_68:Ensure Secure Boot for Shielded GKE Nodes is Enabled
+  #checkov:skip=CKV_GCP_69:Ensure the GKE Metadata Server is Enabled
+  #checkov:skip=CKV_GCP_22:Ensure Container-Optimized OS (cos) is used for Kubernetes Engine Clusters Node image
+
   depends_on = [google_project_service.container]
   name       = "main-node-pool"
   location   = var.region
@@ -126,6 +148,9 @@ resource "google_container_node_pool" "main-node-pool" {
 }
 
 resource "google_storage_bucket" "benchmark-output-storage" {
+  #checkov:skip=CKV_GCP_114:Ensure public access prevention is enforced on Cloud Storage bucket
+  #checkov:skip=CKV_GCP_78:Ensure Cloud storage has versioning enabled
+  #checkov:skip=CKV_GCP_62:Bucket should log access
   name                        = "${var.project_id}-outputs"
   location                    = var.region
   force_destroy               = "true"

@@ -44,6 +44,12 @@ Terraform state will by default be stored in the `eq-terraform-load-generator-tf
 
 ## Security Scanning
 
-Prior to the merge of any pull request, the repo should be scanned for security vulnerabilities with [tfsec](https://github.com/aquasecurity/tfsec).
+The repo is scanned for security vulnerabilities with [Megalinter](https://github.com/oxsecurity/megalinter) as part of our PR actions.
 
-For more info on how to install and run tfsec see the team's approach [here](https://github.com/ONSdigital/eq-terraform-gcp#security-scanning).
+To run MegaLinter locally use the Makefile command:
+```sh
+make megalint
+```
+
+<!-- markdown-link-check-disable-next-line -->
+For more info on the team's approach [here](https://github.com/ONSdigital/eq-terraform-gcp#security-scanning).

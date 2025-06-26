@@ -3,8 +3,8 @@
 set -e
 
 if [[ -z "$PROJECT_ID" ]]; then
-  echo "Missing PROJECT_ID variable"
-  exit 1
+	echo "Missing PROJECT_ID variable"
+	exit 1
 fi
 
 # Destroy infrastructure
