@@ -30,11 +30,11 @@ ENABLE:
 
 # If DISABLE_LINTERS is set, the listed linters will be skipped
 DISABLE_LINTERS:
-  # Getting errors from the external directory scans, excluding directories not available for this linter
+  # Highlights errors in external directories; configuration does not allow exclusion
   - TERRAFORM_TERRASCAN
-  # Getting false positives (`PULL_REQUEST_TEMPLATE.md` formatting issues) - requires separate PR
+  # Highlights issues with the title heading format
   - MARKDOWN_MARKDOWNLINT
-  # Highlights issues that are either irrelevant to us or significant enough to warrant a separate PR
+  # TODO: Fix KICS issues
   - REPOSITORY_KICS
 
 # Displays elapsed time in reports
