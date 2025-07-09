@@ -32,8 +32,6 @@ ENABLE:
 DISABLE_LINTERS:
   # Highlights errors in external directories; configuration does not allow exclusion
   - TERRAFORM_TERRASCAN
-  # Highlights issues with the title heading format
-  - MARKDOWN_MARKDOWNLINT
   # TODO: Fix KICS issues
   - REPOSITORY_KICS
 
