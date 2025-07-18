@@ -1,0 +1,48 @@
+---
+# Configuration file for MegaLinter
+#
+# See all available variables at https://megalinter.io/latest/config-file/ and in
+# linters documentation
+
+# Activates formatting and autofix
+APPLY_FIXES: none
+
+# Formatter errors will be reported as errors (and not warnings) if this variable
+# is set to false
+FORMATTERS_DISABLE_ERRORS: false
+
+# If you use ENABLE variable, all other languages/formats/tooling-formats will
+# be disabled by default
+ENABLE:
+  # SPELL not enabled, getting false positives (e.g. Unknown word - tfvars)
+  - TERRAFORM
+  - BASH
+  - MARKDOWN
+  - YAML
+  - REPOSITORY
+  - COPYPASTE
+
+# If you use ENABLE_LINTERS variable, all other linters will be disabled by default
+# ENABLE_LINTERS:
+
+# If DISABLE is set, the linters in the listed descriptors will be skipped
+# DISABLE:
+
+# If DISABLE_LINTERS is set, the listed linters will be skipped
+DISABLE_LINTERS:
+  # Highlights errors in external directories; configuration does not allow exclusion
+  - TERRAFORM_TERRASCAN
+  # TODO: Fix KICS issues
+  - REPOSITORY_KICS
+
+# Displays elapsed time in reports
+SHOW_ELAPSED_TIME: true
+
+# Uncomment if you want MegaLinter to detect errors but not block CI to pass
+# DISABLE_ERRORS: true
+
+# GitLeaks: only scan the files in this commit, not the entire history
+REPOSITORY_GITLEAKS_ARGUMENTS: "--no-git"
+
+# .gitignore files are excluded by default
+ADDITIONAL_EXCLUDED_DIRECTORIES: [".git", ".terraform", "megalinter-reports"]

@@ -1,6 +1,6 @@
 # EQ Load Generator
 
-This folder contains the config for the EQ load generator infrastructure. It uses the eq-survey-runner-benchmark repo in order to configure a load test using http://locust.io.
+This folder contains the config for the EQ load generator infrastructure. It uses the eq-survey-runner-benchmark repo in order to configure a load test using [Locust](http://locust.io).
 
 * Terraform is used to create a network and K8s cluster in GCP (this defaults to a single machine)
 * We then apply some K8 config to the cluster
@@ -26,7 +26,7 @@ This folder contains the config for the EQ load generator infrastructure. It use
 
 ### Development
 
-Either manually create a new project on GCP or use an existing project. Make sure the project name follows the conventions here: https://cloud.google.com/storage/docs/naming
+Either manually create a new project on GCP or use an existing project. Make sure the project name follows the conventions outlined in the [Google projects guide](https://cloud.google.com/resource-manager/docs/creating-managing-projects)
 
 Rename `terraform.tfvars.example` to `terraform.tfvars` and fill in the values. (Ask a team member for help).
 
@@ -35,7 +35,8 @@ Create with `PROJECT_ID=your-project-id RUNNER_URL=https://your-runner.gcp.dev.e
 Destroy with `PROJECT_ID=your-project-id ./destroy.sh`. This will destroy all resources except the project itself and the assosciated storage bucket. To permenantly destroy the infrastructure, including the project and storage bucket, delete the project via the GCP UI.
 
 If you want to vary the default parameters Locust uses on start, you can specify them using the LOCUST_OPTS environment variable:
-```
+```bash
+<!-- markdownlint-disable-next-line MD059 -->
 LOCUST_OPTS="-f locustfile.py -c 1000 -r 50 -L WARNING" RUNNER_URL=http://your-runner.gcp.dev.eq.ons.digital PROJECT_ID=your-project-id ./create.sh
 ```
 Will create an environment running locust with a web interface with 1000 clients and a hatch rate of 50, with a log level of warnings and above.
@@ -44,6 +45,20 @@ Terraform state will by default be stored in the `eq-terraform-load-generator-tf
 
 ## Security Scanning
 
-Prior to the merge of any pull request, the repo should be scanned for security vulnerabilities with [tfsec](https://github.com/aquasecurity/tfsec).
+The repo is scanned for security vulnerabilities with [Megalinter](https://github.com/oxsecurity/megalinter) as part of our PR actions.
 
-For more info on how to install and run tfsec see the team's approach [here](https://github.com/ONSdigital/eq-terraform-gcp#security-scanning).
+To run MegaLinter locally use the Makefile command:
+```sh
+make megalint
+```
+To run MegaLinter locally and apply fixes use the command:
+```sh
+make megalint-apply
+```
+To delete the MegaLinter reports use the command:
+```sh
+make clean-megalint
+```
+
+<!-- markdown-link-check-disable-next-line -->
+For more info on the team's approach [here](https://github.com/ONSdigital/eq-terraform-gcp#security-scanning).

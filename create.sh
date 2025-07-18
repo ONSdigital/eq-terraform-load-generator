@@ -3,13 +3,13 @@
 set -e
 
 if [[ -z "$PROJECT_ID" ]]; then
-  echo "Missing PROJECT_ID variable"
-  exit 1
+	echo "Missing PROJECT_ID variable"
+	exit 1
 fi
 
 if [[ -z "$RUNNER_URL" ]]; then
-  echo "Missing RUNNER_URL to test"
-  exit 1
+	echo "Missing RUNNER_URL to test"
+	exit 1
 fi
 
 # Deploy infrastructure

@@ -1,0 +1,28 @@
+#Misconfigurations
+
+# (HIGH): Cluster has legacy metadata endpoints enabled
+AVD-GCP-0048
+
+# (LOW): Cluster has IP aliasing disabled
+AVD-GCP-0049
+
+# (LOW): Cluster does not use GCE resource labels
+AVD-GCP-0051
+
+# (LOW): Node pool is not using the COS containerd image type
+AVD-GCP-0054
+
+# (MEDIUM): Cluster does not have a network policy enabled
+AVD-GCP-0056
+
+# (HIGH): Cluster exposes node metadata of pools by default
+AVD-GCP-0057
+
+# (MEDIUM): Cluster does not have private nodes
+AVD-GCP-0059
+
+# (HIGH): Cluster does not have master authorized networks enabled
+AVD-GCP-0061
+
+# (LOW): Storage bucket encryption does not use a customer-managed key
+AVD-GCP-0066
