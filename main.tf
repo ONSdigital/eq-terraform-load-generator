@@ -92,6 +92,9 @@ resource "google_container_cluster" "runner-benchmark" {
       issue_client_certificate = false
     }
   }
+  release_channel {
+    channel = "STABLE"
+  }
 
   maintenance_policy {
     daily_maintenance_window {
