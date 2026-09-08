@@ -81,7 +81,6 @@ resource "google_container_cluster" "runner-benchmark" {
   name                     = "runner-benchmark"
   description              = "Kubernetes Cluster - Dev Benchmark environment"
   location                 = var.region
-  min_master_version       = var.k8s_min_master_version
   initial_node_count       = 1
   remove_default_node_pool = true
   project                  = var.project_id
@@ -92,6 +91,9 @@ resource "google_container_cluster" "runner-benchmark" {
     client_certificate_config {
       issue_client_certificate = false
     }
+  }
+  release_channel {
+    channel = "STABLE"
   }
 
   maintenance_policy {
@@ -114,7 +116,6 @@ resource "google_container_node_pool" "main-node-pool" {
   cluster    = google_container_cluster.runner-benchmark.name
   node_count = 1
   project    = var.project_id
-  version    = var.k8s_min_master_version
 
   lifecycle {
     ignore_changes = [
