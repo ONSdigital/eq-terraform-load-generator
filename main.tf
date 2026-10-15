@@ -41,8 +41,9 @@ resource "google_compute_network" "k8s" {
   #checkov:skip=CKV2_GCP_18:Ensure GCP network defines a firewall and does not use the default firewall
   depends_on              = [google_project_service.compute]
   name                    = "k8s"
-  auto_create_subnetworks = "true"
+  auto_create_subnetworks = "false"
   project                 = var.project_id
+  description             = "Private Kubernetes cluster network"
 }
 
 // GKE
@@ -62,20 +63,33 @@ resource "google_project_iam_member" "compute" {
   member  = "serviceAccount:${google_service_account.compute.email}"
 }
 
+resource "google_compute_subnetwork" "k8s" {
+  depends_on = [google_project_service.compute]
+  name          = "k8s-subnet"
+  ip_cidr_range = "10.10.0.0/16"
+  region        = var.region
+  network       = google_compute_network.k8s.id
+  project       = var.project_id
+
+  secondary_ip_range {
+    range_name    = "pods"
+    ip_cidr_range = "10.20.0.0/16"
+  }
+
+  secondary_ip_range {
+    range_name    = "services"
+    ip_cidr_range = "10.30.0.0/16"
+  }
+}
+
 resource "google_container_cluster" "runner-benchmark" {
-  #checkov:skip=CKV_GCP_20:Ensure master authorized networks is set to enabled in GKE clusters
   #checkov:skip=CKV_GCP_61:Enable VPC Flow Logs and Intranode Visibility
-  #checkov:skip=CKV_GCP_25:Ensure Kubernetes Engine clusters have private nodes
-  #checkov:skip=CKV_GCP_23:Ensure Kubernetes Cluster is created with Alias IP ranges enabled
   #checkov:skip=CKV_GCP_12:Ensure Network Policy is enabled on Kubernetes Engine Clusters
-  #checkov:skip=CKV_GCP_64:Ensure clusters are created with Private Nodes
   #checkov:skip=CKV_GCP_70:Ensure the GKE Release Channel is set
   #checkov:skip=CKV_GCP_24:Ensure PodSecurityPolicy controller is enabled on the Kubernetes Engine Clusters
-  #checkov:skip=CKV_GCP_69:Ensure the GKE Metadata Server is Enabled
   #checkov:skip=CKV_GCP_117:Ensure basic roles are not used at project level.
   #checkov:skip=CKV_GCP_66:Ensure use of Binary Authorization
   #checkov:skip=CKV_GCP_21:Ensure Kubernetes Clusters are configured with Labels
-  #chekov:skip=CKV_GCP_20:Ensure master authorized networks is set to enabled in GKE clusters
   #checkov:skip=CKV_GCP_65:Manage Kubernetes RBAC users with Google Groups for GKE
   depends_on               = [google_project_service.container]
   name                     = "runner-benchmark"
@@ -85,6 +99,7 @@ resource "google_container_cluster" "runner-benchmark" {
   remove_default_node_pool = true
   project                  = var.project_id
   network                  = google_compute_network.k8s.self_link
+  subnetwork               = google_compute_subnetwork.k8s.self_link
   deletion_protection      = false
 
   master_auth {
@@ -92,6 +107,18 @@ resource "google_container_cluster" "runner-benchmark" {
       issue_client_certificate = false
     }
   }
+
+  private_cluster_config {
+    enable_private_nodes    = true
+    enable_private_endpoint = true
+    master_ipv4_cidr_block  = "172.16.0.0/28"
+  }
+
+  ip_allocation_policy {
+    cluster_secondary_range_name  = "pods"
+    services_secondary_range_name = "services"
+  }
+
   release_channel {
     channel = "STABLE"
   }
