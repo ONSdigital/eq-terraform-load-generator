@@ -80,7 +80,7 @@ resource "google_compute_subnetwork" "k8s" {
   region        = var.region
   network       = google_compute_network.k8s.id
   project       = var.project_id
-  private_ip_google_access = true
+  # private_ip_google_access = true  # TODO: Try without for now, as we are using NAT for egress
 
   secondary_ip_range {
     range_name    = "pods"
@@ -101,12 +101,19 @@ resource "google_compute_router" "k8s_nat_router" {
   network    = google_compute_network.k8s.self_link
 }
 
+resource "google_compute_address" "k8s_nat_ip" {
+  name    = "k8s-nat-ip"
+  project = var.project_id
+  region  = var.region
+}
+
 resource "google_compute_router_nat" "k8s_nat" {
   name                                = "k8s-nat"
   project                             = var.project_id
   router                              = google_compute_router.k8s_nat_router.name
   region                              = var.region
   nat_ip_allocate_option              = "MANUAL_ONLY"
+  nat_ips                             = [google_compute_address.k8s_nat_ip.self_link]
   source_subnetwork_ip_ranges_to_nat  = "ALL_SUBNETWORKS_ALL_IP_RANGES"
   enable_endpoint_independent_mapping = true
 
