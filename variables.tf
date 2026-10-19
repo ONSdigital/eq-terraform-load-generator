@@ -20,7 +20,7 @@ variable "k8s_autoscaling_max_node_count" {
   default     = 5
 }
 
-variable "authorized_networks" {
+variable "k8s_master_authorized_networks" {
   type = map(string)
   description = "Map of authorised network CIDRs that can access the Kubernetes API"
   default = {} # TODO: Add authorized networks
