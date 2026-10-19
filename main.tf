@@ -48,19 +48,29 @@ resource "google_compute_network" "k8s" {
 
 // GKE
 
-# service account for compute engine instances
-resource "google_service_account" "compute" {
-  account_id   = "compute"
-  display_name = "Compute Engine service account"
+# service account for GKE nodes
+resource "google_service_account" "k8s_nodes" {
+  account_id   = "k8s-nodes"
+  display_name = "Kubernetes Nodes service account"
   project      = var.project_id
 }
 
-resource "google_project_iam_member" "compute" {
-  #checkov:skip=CKV_GCP_117:Ensure basic roles are not used at project level.
-  #checkov:skip=CKV_GCP_49:Ensure roles do not impersonate or manage Service Accounts used at project level
+resource "google_project_iam_member" "k8s_nodes_logging_writer" {
   project = var.project_id
-  role    = "roles/editor"
-  member  = "serviceAccount:${google_service_account.compute.email}"
+  role    = "roles/logging.logWriter"
+  member  = "serviceAccount:${google_service_account.k8s_nodes.email}"
+}
+
+resource "google_project_iam_member" "k8s_nodes_monitoring_writer" {
+  project = var.project_id
+  role    = "roles/monitoring.metricWriter"
+  member  = "serviceAccount:${google_service_account.k8s_nodes.email}"
+}
+
+resource "google_project_iam_member" "k8s_nodes_monitoring_viewer" {
+  project = var.project_id
+  role    = "roles/monitoring.viewer"
+  member  = "serviceAccount:${google_service_account.k8s_nodes.email}"
 }
 
 resource "google_compute_subnetwork" "k8s" {
@@ -112,6 +122,9 @@ resource "google_container_cluster" "runner-benchmark" {
     enable_private_nodes    = true
     enable_private_endpoint = true
     master_ipv4_cidr_block  = "172.16.0.0/28"
+  }
+
+  master_authorized_networks_config {
   }
 
   ip_allocation_policy {
@@ -171,7 +184,7 @@ resource "google_container_node_pool" "main-node-pool" {
       "monitoring",
     ]
 
-    service_account = google_service_account.compute.email
+    service_account = google_service_account.k8s_nodes.email
     tags            = ["k8s-node", "default-node-pool"]
   }
 }
