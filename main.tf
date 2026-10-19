@@ -125,11 +125,11 @@ resource "google_container_cluster" "runner-benchmark" {
   }
 
   master_authorized_networks_config {
-    dynamic "authorized_networks" {
-      for_each = var.k8s_master_authorized_networks
+    dynamic "cidr_blocks" {
+      for_each = var.authorized_networks
       content {
-        cidr_block   = authorized_networks.value
-        display_name = authorized_networks.key
+        display_name = cidr_blocks.key
+        cidr_block   = cidr_blocks.value
       }
     }
   }
