@@ -80,7 +80,7 @@ resource "google_compute_subnetwork" "k8s" {
   region        = var.region
   network       = google_compute_network.k8s.id
   project       = var.project_id
-  # private_ip_google_access = true
+  private_ip_google_access = true
 
   secondary_ip_range {
     range_name    = "pods"
@@ -90,6 +90,29 @@ resource "google_compute_subnetwork" "k8s" {
   secondary_ip_range {
     range_name    = "services"
     ip_cidr_range = "10.30.0.0/16"
+  }
+}
+
+resource "google_compute_router" "k8s_nat_router" {
+  depends_on = [google_project_service.compute]
+  name       = "k8s-nat-router"
+  project    = var.project_id
+  region     = var.region
+  network    = google_compute_network.k8s.self_link
+}
+
+resource "google_compute_router_nat" "k8s_nat" {
+  name                                = "k8s-nat"
+  project                             = var.project_id
+  router                              = google_compute_router.k8s_nat_router.name
+  region                              = var.region
+  nat_ip_allocate_option              = "MANUAL_ONLY"
+  source_subnetwork_ip_ranges_to_nat  = "ALL_SUBNETWORKS_ALL_IP_RANGES"
+  enable_endpoint_independent_mapping = true
+
+  log_config {
+    enable = true
+    filter = "ALL"
   }
 }
 
