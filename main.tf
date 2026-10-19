@@ -80,6 +80,7 @@ resource "google_compute_subnetwork" "k8s" {
   region        = var.region
   network       = google_compute_network.k8s.id
   project       = var.project_id
+  # private_ip_google_access = true
 
   secondary_ip_range {
     range_name    = "pods"
@@ -120,7 +121,7 @@ resource "google_container_cluster" "runner-benchmark" {
 
   private_cluster_config {
     enable_private_nodes    = true
-    enable_private_endpoint = true
+    enable_private_endpoint = false # Only the IPs in the master_authorized_networks_config block can reach this
     master_ipv4_cidr_block  = "172.16.0.0/28"
   }
 
