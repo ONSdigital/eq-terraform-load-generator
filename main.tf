@@ -243,6 +243,18 @@ resource "google_storage_bucket" "benchmark-output-storage" {
   }
 }
 
+resource "google_storage_bucket_iam_member" "benchmark_output_bucket_reader" {
+  bucket = google_storage_bucket.benchmark-output-storage.name
+  role   = "roles/storage.legacyBucketReader"
+  member = "serviceAccount:${google_service_account.k8s_nodes.email}"
+}
+
+resource "google_storage_bucket_iam_member" "benchmark_output_object_admin" {
+  bucket = google_storage_bucket.benchmark-output-storage.name
+  role   = "roles/storage.objectAdmin"
+  member = "serviceAccount:${google_service_account.k8s_nodes.email}"
+}
+
 output "benchmark-output-storage" {
   value = google_storage_bucket.benchmark-output-storage.name
 }
