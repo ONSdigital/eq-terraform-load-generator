@@ -2,7 +2,7 @@ terraform {
   backend "gcs" {
     bucket = "eq-terraform-load-generator-tfstate"
   }
-  required_version = ">= 1.9.6"
+  required_version = ">= 1.15.8"
 }
 
 provider "google" {
