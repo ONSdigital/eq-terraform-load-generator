@@ -39,7 +39,7 @@ jobs:
           fetch-depth: 0
 
       - name: MegaLinter
-        uses: oxsecurity/megalinter/flavors/terraform@v9.4.0
+        uses: oxsecurity/megalinter/flavors/terraform@v8.8.0
         id: ml
 
         env:
